@@ -46,7 +46,7 @@ window.addEventListener("load",()=>{
     document.querySelector(".human2").innerHTML=player2;
 
 
-    let currentPlayer = "x";
+    let currentPlayer = "X";
     let gameStatus = "GameOn";
     var boxes = document.getElementsByClassName("boxes");
     
@@ -82,15 +82,15 @@ window.addEventListener("load",()=>{
 
         if (boxes[i].innerHTML.trim() == "" && gameStatus == "GameOn") {
           boxes[i].innerHTML = currentPlayer;
-          currentPlayer = currentPlayer == "x" ? "o" : "x";
+          currentPlayer = currentPlayer == "X" ? "O" : "X";
           curr_name= curr_name== u[3].textContent ?u[4].textContent:u[3].textContent;
           document.getElementById("player").innerHTML = curr_name;
-          if(boxes[i].innerHTML.trim()==="x")
+          if(boxes[i].innerHTML.trim()==="X")
             audio1.play();
 
-          else if(boxes[i].innerHTML.trim()==="o")
+          else if(boxes[i].innerHTML.trim()==="O")
             audio2.play();
-          if(boxes[i].innerHTML.trim()==="x"||boxes[i].innerHTML.trim()==="o")
+          if(boxes[i].innerHTML.trim()==="X"||boxes[i].innerHTML.trim()==="O")
           {
             boxes[i].style.cursor="not-allowed";
           }
@@ -154,7 +154,14 @@ window.addEventListener("load",()=>{
           boxes[8].innerHTML.trim()!= ""
           )
         {
-          document.getElementById("draw").classList.remove("hide");
+          // document.getElementById("draw").classList.remove("hide");
+          document.querySelector(".text").innerHTML="Game draw! ";
+          document.querySelector(".endgame").style.display="block";
+  document.querySelector(".playagain").addEventListener("click", function() {
+      newgame();
+      audio2.play();
+      curr_name=player1;
+    });
           // document.querySelector("#pop").style.display="none";
           audio.play();
           gameStatus = "Game Over";
@@ -167,6 +174,7 @@ window.addEventListener("load",()=>{
     }
     function newgame()
     {
+       document.querySelector(".endgame").style.display="none";
       for (let i = 0; i < boxes.length; i++) {
         boxes[i].innerHTML = "";
         boxes[i].style.background = "#131313";
@@ -181,7 +189,7 @@ window.addEventListener("load",()=>{
       document.querySelector("#player").innerHTML=player1;
 
       document.querySelector("#pop").style.display="block";
-      currentPlayer = "x";
+      currentPlayer = "X";
       document.querySelector("#message").classList.add("hide");
       document.getElementById("draw").classList.add("hide");
 
@@ -211,14 +219,21 @@ function showWinner(x, y, z)
     var h=document.querySelector(".Sgirl");
     h.classList.add("big");
     h.classList.remove("new");
+    document.querySelector(".text").innerHTML=player1+" Wins!!";
   }
   else
   {
     const h=document.querySelector(".Srobot");
     h.classList.add("big");
     h.classList.remove("new");
+    document.querySelector(".text").innerHTML=player2+" Wins!!";
   }
-  document.querySelector("#message").classList.remove("hide");
+  document.querySelector(".endgame").style.display="block";
+  document.querySelector(".playagain").addEventListener("click", function() {
+      newgame();
+      audio2.play();
+      curr_name=player1;
+    });
   gameStatus = "Game Over";
 
 }
@@ -476,4 +491,3 @@ function minimax(newBoard, player) {
   }
 
 });
-
